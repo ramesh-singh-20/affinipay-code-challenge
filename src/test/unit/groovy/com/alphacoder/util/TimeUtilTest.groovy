@@ -30,7 +30,7 @@ class TimeUtilTest extends Specification{
 
     }
 
-    def 'Test TimeUtil | addMinutes() | Given time is AM and resulting time greater than 12'(){
+    def 'Test TimeUtil | addMinutes() | Given time is PM and resulting time greater than 12'(){
         given:
         def inputTimeString= "9:13 PM"
         def minutesToAdd= 320
@@ -40,6 +40,19 @@ class TimeUtilTest extends Specification{
 
         then:
         result=="2:33 AM"
+
+    }
+
+    def 'Test TimeUtil | addMinutes() | Given time is AM and resulting time greater than 12'(){
+        given:
+        def inputTimeString= "9:13 AM"
+        def minutesToAdd= 320
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="2:33 PM"
 
     }
 }
