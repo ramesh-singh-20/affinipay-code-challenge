@@ -32,6 +32,10 @@ public class TimeUtil {
             meridian= "AM";
         }
 
+        if(hours>12){
+            hours= hours%12;
+        }
+
         //Getting the String values for the hours and minutes.
         hoursString= String.valueOf(hours);
         minutesString= String.valueOf(minutes);
