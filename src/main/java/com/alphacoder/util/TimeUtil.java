@@ -21,20 +21,45 @@ public class TimeUtil {
         int hoursToBeAdded= (minutesToAdd)/60;
         int minutesToBeAdded= (minutesToAdd)%60;
 
+        //Converting the hour part into 24 hour format.
+        if(meridian.equalsIgnoreCase("AM")){
+            if(hours== 12){
+                hours= 0;
+            }
+        }else if(meridian.equalsIgnoreCase("PM")){
+            if(hours!=12){
+                hours+=12;
+            }
+        }
+
         //Adding the above calculated hours and minutes to the given time's hours and minutes.
         hours= hours+hoursToBeAdded;
         minutes= minutes+minutesToBeAdded;
 
-        //Setting the meridian
-        if(hours>= 12 && meridian.equalsIgnoreCase("AM")){
-            meridian= "PM";
-        }else if(hours>= 12 && meridian.equalsIgnoreCase("PM")){
-            meridian= "AM";
+        //Checking if minutes are greater than 60, if yes convert them to hours.
+        if(minutes>59){
+            hours=hours+(minutes/60);
+            minutes= minutes%60;
         }
 
-        if(hours>12){
-            hours= hours%12;
+        if(minutes<0){
+            hours= hours-1;
+            minutes = 60- Math.abs(minutes);
         }
+
+        if(hours<0){
+            hours= 24-Math.abs(hours);
+        }
+
+        hours= hours%24;
+
+        if(hours<12){
+            meridian= "AM";
+        }else if(hours>=12){
+            meridian= "PM";
+        }
+
+        hours= mapTwentyFourHourToTwelveHourFormat(hours);
 
         //Getting the String values for the hours and minutes.
         hoursString= String.valueOf(hours);
@@ -47,5 +72,48 @@ public class TimeUtil {
 
         //returning back the timeString.
         return hoursString+":"+minutesString+ " "+meridian;
+    }
+
+    private static int mapTwentyFourHourToTwelveHourFormat(int twentyHourFormat){
+        switch (twentyHourFormat){
+            case 0:
+            case 12:
+                return 12;
+            case 1:
+            case 13:
+                return 1;
+            case 2:
+            case 14:
+                return 2;
+            case 3:
+            case 15:
+                return 3;
+            case 4:
+            case 16:
+                return 4;
+            case 5:
+            case 17:
+                return 5;
+            case 6:
+            case 18:
+                return 6;
+            case 7:
+            case 19:
+                return 7;
+            case 8:
+            case 20:
+                return 8;
+            case 9:
+            case 21:
+                return 9;
+            case 10:
+            case 22:
+                return 10;
+            case 11:
+            case 23:
+                return 11;
+            default:
+                return -1;
+        }
     }
 }
