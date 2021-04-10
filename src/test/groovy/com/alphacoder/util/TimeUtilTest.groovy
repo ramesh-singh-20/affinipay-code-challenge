@@ -252,6 +252,30 @@ class TimeUtilTest extends Specification{
         result=="5:03 PM"
     }
 
+    def 'Test TimeUtil | addMinutes() | Resulting time comes as 12:00 PM'(){
+        given:
+        def inputTimeString= "11:47 AM"
+        def minutesToAdd= 13
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="12:00 PM"
+    }
+
+    def 'Test TimeUtil | addMinutes() | Resulting time comes as 12:00 AM'(){
+        given:
+        def inputTimeString= "11:47 PM"
+        def minutesToAdd= 13
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="12:00 AM"
+    }
+
 
 
     //Positive minutesToAdd test cases ends here.
@@ -347,8 +371,217 @@ class TimeUtilTest extends Specification{
 
         then:
         result=="11:43 PM"
+    }
+
+    def 'Test TimeUtil | addMinutes() | Given time is AM | added minutes are -ve'(){
+        given:
+        def inputTimeString= "9:13 AM"
+        def minutesToAdd= -510
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="12:43 AM"
+    }
+
+    def 'Test TimeUtil | addMinutes() | minutes-ve and resulting time comes as 12:00 PM'(){
+        given:
+        def inputTimeString= "12:13 PM"
+        def minutesToAdd= -13
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="12:00 PM"
+    }
+
+    def 'Test TimeUtil | addMinutes() | minutes-ve and resulting time comes as 12:00 AM'(){
+        given:
+        def inputTimeString= "12:13 AM"
+        def minutesToAdd= -13
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="12:00 AM"
+    }
+
+    def 'Test TimeUtil | addMinutes() | Given time is AM -ve minutes and resulting hour equal to 12'(){
+        given:
+        def inputTimeString= "12:13 AM"
+        def minutesToAdd= -720
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="12:13 PM"
+    }
+
+    def 'Test TimeUtil | addMinutes() | Given time is PM -ve minutes and resulting hour equal to 12'(){
+        given:
+        def inputTimeString= "12:13 PM"
+        def minutesToAdd= -720
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="12:13 AM"
+    }
+
+    def 'Test TimeUtil | addMinutes() | Given time is AM -ve minutes and resulting hour equal to 24'(){
+        given:
+        def inputTimeString= "12:13 AM"
+        def minutesToAdd= -1440
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="12:13 AM"
+    }
+
+    def 'Test TimeUtil | addMinutes() | Given time is PM -ve minutes and resulting hour equal to 24'(){
+        given:
+        def inputTimeString= "12:13 PM"
+        def minutesToAdd= -1440
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="12:13 PM"
+    }
+
+    def 'Test TimeUtil | addMinutes() | -ve minutesToAdd and given time is PM and resulting time greater than 12'(){
+        given:
+        def inputTimeString= "2:13 PM"
+        def minutesToAdd= -320
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="8:53 AM"
 
     }
+
+    def 'Test TimeUtil | addMinutes() | -ve minutesToAdd and given time is AM and resulting time greater than 12'(){
+        given:
+        def inputTimeString= "2:13 AM"
+        def minutesToAdd= -320
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="8:53 PM"
+
+    }
+
+    def 'Test TimeUtil | addMinutes() | -ve minutesToAdd and given time is AM and minutes added is greater than 24 hours'(){
+        given:
+        def inputTimeString= "9:13 AM"
+        def minutesToAdd= 2000
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="6:33 PM"
+    }
+
+    def 'Test TimeUtil | addMinutes() | -ve minutesToAdd and given time is PM and minutes added is greater than 24 hours'(){
+        given:
+        def inputTimeString= "10:23 PM"
+        def minutesToAdd= 2000
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="7:43 AM"
+    }
+
+    def 'Test TimeUtil | addMinutes() | -ve minutesToAdd and given time is AM and minutes added is greater than 36 hours'(){
+        given:
+        def inputTimeString= "9:13 AM"
+        def minutesToAdd= -2180
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="8:53 PM"
+    }
+
+    def 'Test TimeUtil | addMinutes() | -ve minutesToAdd and given time is PM and minutes added is greater than 36 hours'(){
+        given:
+        def inputTimeString= "10:23 PM"
+        def minutesToAdd= -2180
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="10:03 AM"
+    }
+    def 'Test TimeUtil | addMinutes() | -ve minutesToAdd and given time is AM and minutes added is greater than 48 hours'(){
+        given:
+        def inputTimeString= "9:13 AM"
+        def minutesToAdd= -3030
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="6:43 AM"
+    }
+
+    def 'Test TimeUtil | addMinutes() | -ve minutesToAdd and given time is PM and minutes added is greater than 48 hours'(){
+        given:
+        def inputTimeString= "10:23 PM"
+        def minutesToAdd= -3030
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="7:53 PM"
+    }
+
+    def 'Test TimeUtil | addMinutes() | -ve minutesToAdd and given time is in PM | hours to add zero'(){
+        given:
+        def inputTimeString= "12:13 PM"
+        def minutesToAdd= -20
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="11:53 AM"
+    }
+
+
+
+    def 'Test TimeUtil | addMinutes() | -ve minutesToAdd and given time is in AM | hours to add zero'(){
+        given:
+        def inputTimeString= "12:23 AM"
+        def minutesToAdd= -20
+
+        when:
+        def result= TimeUtil.addMinutes(inputTimeString, minutesToAdd)
+
+        then:
+        result=="12:03 AM"
+    }
+
+
+
 
     //Negative minutesToAdd test cases ends here.
 }

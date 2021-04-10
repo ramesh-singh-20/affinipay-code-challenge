@@ -47,11 +47,11 @@ public class TimeUtil {
             minutes = 60- Math.abs(minutes);
         }
 
+        hours= hours%24;
+
         if(hours<0){
             hours= 24-Math.abs(hours);
         }
-
-        hours= hours%24;
 
         if(hours<12){
             meridian= "AM";
